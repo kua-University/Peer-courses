@@ -1,5 +1,7 @@
-//app/layout.tsx
+//app/layout
 "use client";
+import React from 'react';
+
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Elements } from "@stripe/react-stripe-js";
@@ -25,4 +27,5 @@ export default function RootLayout({
       </html>
     </ClerkProvider >
   );
+
 }

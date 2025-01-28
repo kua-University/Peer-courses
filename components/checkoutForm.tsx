@@ -1,4 +1,6 @@
+//components/checkoutForm
 "use client";
+import React from 'react';
 
 import { CardElement, useStripe, useElements, Stripe } from "@stripe/react-stripe-js";
 import { useState, useEffect } from "react";
