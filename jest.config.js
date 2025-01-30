@@ -1,12 +1,16 @@
-//jest.config.js
-
 module.exports = {
+    preset: 'ts-jest',
+    testEnvironment: 'jsdom',
     transform: {
-        '^.+\\.(js|ts|tsx)$': 'babel-jest',
+        '^.+\\.(ts|tsx|js|jsx)$': 'babel-jest', // Ensures Babel handles JSX & TypeScript
+    },
+    moduleNameMapper: {
+        '^@stripe/react-stripe-js$': '<rootDir>/node_modules/@stripe/react-stripe-js',
+        '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+        '^@/(.*)$': '<rootDir>/$1',// Mock styles
     },
     transformIgnorePatterns: [
-        'node_modules/(?!(@stripe)/)', // Add any specific node_modules packages if necessary
+        '/node_modules/(?!@stripe/react-stripe-js)', // Ensures Stripe is transpiled correctly
     ],
-    setupFilesAfterEnv: ['<rootDir>/tests/jest.setup.js'],
-    testEnvironment: 'jest-environment-jsdom', // Removed duplicate
+    setupFilesAfterEnv: ['<rootDir>/tests/jest.setup.js'], // Ensure setup file is included
 };

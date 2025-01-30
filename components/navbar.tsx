@@ -1,3 +1,4 @@
+//components/navbar
 "use client";
 import React from 'react';
 
@@ -9,6 +10,7 @@ export default function Navbar()
     const { isLoaded, userId } = useAuth();
 
     return (
+
         <nav className="flex items-center justify-between bg-blue-500 p-4 shadow-md">
             {/* Logo */}
             <div className="text-white text-lg font-bold tracking-wide">
@@ -50,5 +52,6 @@ export default function Navbar()
                 )}
             </div>
         </nav>
+
     );
 }

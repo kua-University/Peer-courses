@@ -65,10 +65,11 @@ export default function AddCourse()
             )}
 
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="imageUrl" className="block text-sm font-medium text-gray-700 mb-2">
                     Image URL:
                 </label>
                 <input
+                    id="imageUrl"
                     type="text"
                     name="imageUrl"
                     value={formData.imageUrl}
@@ -80,10 +81,11 @@ export default function AddCourse()
             </div>
 
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
                     Title:
                 </label>
                 <input
+                    id="title"
                     type="text"
                     name="title"
                     value={formData.title}
@@ -95,10 +97,11 @@ export default function AddCourse()
             </div>
 
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
                     Description:
                 </label>
                 <textarea
+                    id="description"
                     name="description"
                     value={formData.description}
                     onChange={handleChange}
@@ -109,10 +112,11 @@ export default function AddCourse()
             </div>
 
             <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label htmlFor="paymentAmount" className="block text-sm font-medium text-gray-700 mb-2">
                     Payment Amount:
                 </label>
                 <input
+                    id="paymentAmount"
                     type="number"
                     name="paymentAmount"
                     value={formData.paymentAmount}

@@ -67,7 +67,7 @@ export default function CoursesPage()
                     const errorData = await response.json();
                     throw new Error(errorData.error || "Failed to fetch courses.");
                 }
-
+                console.log(userId);
                 const data: { courses: Course[] } = await response.json();
                 setCourses(data.courses);
             } catch (err)

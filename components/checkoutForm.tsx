@@ -2,9 +2,9 @@
 "use client";
 import React from 'react';
 
-import { CardElement, useStripe, useElements, Stripe } from "@stripe/react-stripe-js";
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { useState, useEffect } from "react";
-
+import Stripe from "@stripe/stripe-js";
 interface CheckoutFormProps
 {
     courseId: string;
@@ -26,7 +26,7 @@ export default function CheckoutForm({ courseId, paymentAmount, onClose }: Check
         const cardElement = elements?.getElement(CardElement);
         if (cardElement)
         {
-            cardElement.on("change", (event: Stripe.ElementChangeEvent) =>
+            cardElement.on("change", (event: Stripe.StripeElementChangeEvent) =>
             {
                 setIsCardValid(event.complete);  // Check if the card input is complete
             });
@@ -92,7 +92,7 @@ export default function CheckoutForm({ courseId, paymentAmount, onClose }: Check
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4" role="form">
             {error && <p className="text-red-500">{error}</p>}
             <CardElement className="border p-2 rounded-md" />
             <button
