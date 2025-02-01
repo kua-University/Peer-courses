@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import AddCourse from "../../components/AddCourse";
+import AddCourse from "../../components/addcourse";
 import '@testing-library/jest-dom';
 
 // Mocking the fetch API to simulate the backend response

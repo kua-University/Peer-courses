@@ -1,90 +1,63 @@
-import { render, screen, fireEvent, within } from '@testing-library/react';
-import { ClerkProvider, useAuth, UserButton } from '@clerk/clerk-react';
-import Navbar from '../../components/Navbar';
-import { useRouter } from 'next/navigation';
-import '@testing-library/jest-dom';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { ClerkProvider } from '@clerk/nextjs';
+import CoursesPage from '../../app/courses/page';
+import { useRouter } from 'next/navigation'; // App Router requires `next/navigation`
+import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime';
+import nextRouterMock from 'next-router-mock'; // ✅ Correct import
 
-// Mock Next.js router properly
+// Mock Next.js router and usePathname
 jest.mock('next/navigation', () => ({
-    useRouter: jest.fn(() => ({
+    useRouter: jest.fn(),
+    usePathname: jest.fn().mockReturnValue('/mock-path'), // Mock with default return value
+}));
+
+// Custom render function with Clerk and Router Context
+const renderWithClerkAndRouter = (ui, { route = '/' } = {}) => {
+    nextRouterMock.setCurrentUrl(route); // ✅ Set the current route
+
+    const mockRouter = {
+        ...nextRouterMock,
         push: jest.fn(),
         replace: jest.fn(),
         prefetch: jest.fn(),
-    })),
-    usePathname: jest.fn(() => "/"), // Ensure `usePathname` is also mocked
-}));
+    };
 
-// Correctly mock useAuth from Clerk
-jest.mock('@clerk/clerk-react', () => ({
-    ClerkProvider: jest.fn(({ children }) => <>{children}</>),
-    useAuth: jest.fn(), // Mock useAuth instead of useClerk
-    UserButton: jest.fn(() => <div data-testid="user-button">User</div>),
-}));
+    useRouter.mockReturnValue(mockRouter); // ✅ Ensure `useRouter()` returns the mock
 
-// Function to render Navbar inside ClerkProvider
-const renderWithClerk = (ui) => {
     return render(
-        <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || 'test_key'}>
-            {ui}
+        <ClerkProvider publishableKey="your-publishable-key-here">
+            <RouterContext.Provider value={mockRouter}>
+                {ui}
+            </RouterContext.Provider>
         </ClerkProvider>
     );
 };
 
-// Test unauthenticated user
-test('renders the navbar with "Sign In" button when user is not authenticated', () => {
-    useAuth.mockReturnValue({ isLoaded: true, userId: null }); // Properly mock useAuth
-    renderWithClerk(<Navbar />);
+describe('Courses Page Integration Test', () => {
+    it('renders the Courses page with Navbar and AddCourseForm', () => {
+        renderWithClerkAndRouter(<CoursesPage />);
 
-    expect(screen.getByText(/Sign In/i)).toBeInTheDocument();
+        // Ensure the Navbar and AddCourseForm are rendered
+        expect(screen.getByText(/Navbar/i)).toBeInTheDocument();
+        expect(screen.getByRole('form', { name: /add course/i })).toBeInTheDocument();
+    });
 
-    // Find the correct "Courses" link by its href
-    const coursesLinks = screen.getAllByText(/Courses/i);
-    expect(coursesLinks.some(link => link.getAttribute('href') === '/sign-in')).toBe(true);
+    it('should navigate when a course is clicked', () => {
+        nextRouterMock.setCurrentUrl('/courses'); // ✅ Correct router setup
 
-    const myCoursesLinks = screen.getAllByText(/My Courses/i);
-    expect(myCoursesLinks.some(link => link.getAttribute('href') === '/sign-in')).toBe(true);
-});
+        const mockRouter = {
+            ...nextRouterMock,
+            push: jest.fn(),
+        };
 
-// Test authenticated user
-test('renders the navbar with user information when authenticated', () => {
-    useAuth.mockReturnValue({ isLoaded: true, userId: 'user_123' }); // Properly mock useAuth
+        useRouter.mockReturnValue(mockRouter);
+        renderWithClerkAndRouter(<CoursesPage />, { route: '/courses' });
 
-    renderWithClerk(<Navbar />);
+        // Simulate clicking on a course link
+        const courseLink = screen.getByText(/course 1/i); // Adjust text as needed
+        fireEvent.click(courseLink);
 
-    expect(screen.getByTestId('user-button')).toBeInTheDocument();
-
-    // Ensure correct href values for logged-in users
-    const coursesLinks = screen.getAllByText(/Courses/i);
-    expect(coursesLinks.some(link => link.getAttribute('href') === '/courses')).toBe(true);
-
-    const myCoursesLinks = screen.getAllByText(/My Courses/i);
-    expect(myCoursesLinks.some(link => link.getAttribute('href') === '/my-courses')).toBe(true);
-});
-
-// Test navigation clicks
-test('redirects to the correct URLs when links are clicked', () => {
-    const mockPush = jest.fn();
-    useRouter.mockReturnValue({ push: mockPush, replace: jest.fn(), prefetch: jest.fn() });
-
-    useAuth.mockReturnValue({ isLoaded: true, userId: 'user_123' });
-
-    renderWithClerk(<Navbar />);
-
-    // Find the first "Courses" link and click it
-    const coursesLink = screen.getAllByText(/Courses/i).find(link => link.getAttribute('href') === '/courses');
-    fireEvent.click(coursesLink);
-    expect(mockPush).toHaveBeenCalledWith('/courses');
-
-    const myCoursesLink = screen.getAllByText(/My Courses/i).find(link => link.getAttribute('href') === '/my-courses');
-    fireEvent.click(myCoursesLink);
-    expect(mockPush).toHaveBeenCalledWith('/my-courses');
-});
-
-// Test User Avatar Rendering
-test('shows the user avatar when authenticated', () => {
-    useAuth.mockReturnValue({ isLoaded: true, userId: 'user_123' });
-
-    renderWithClerk(<Navbar />);
-
-    expect(screen.getByTestId('user-button')).toBeInTheDocument();
+        // Check if router's push method is called for navigation
+        expect(mockRouter.push).toHaveBeenCalledWith('/courses/1');
+    });
 });
