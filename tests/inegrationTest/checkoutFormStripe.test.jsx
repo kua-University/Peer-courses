@@ -29,7 +29,7 @@ const renderWithStripeAndRouter = (ui) => {
     nextRouterMock.setCurrentUrl('/checkout');
 
     return render(
-        <StripeProvider stripe={Stripe('your-stripe-public-key')}>
+        <StripeProvider stripe={Stripe('process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY')}>
             <Elements>
                 <RouterContext.Provider value={{ push: jest.fn() }}>
                     {ui}
