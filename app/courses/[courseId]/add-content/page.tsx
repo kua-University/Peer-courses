@@ -1,3 +1,4 @@
+//app/courses/[courseId]/add-content/page.tsx
 'use client';
 import React from 'react';
 

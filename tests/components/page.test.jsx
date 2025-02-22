@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import Home from "../../app/page";
-import Navbar from "../../components/navbar";
-import AddCourse from "../../components/addcourse";
+// import Navbar from "../../components/navbar";
+// import AddCourse from "../../components/addcourse";
 
 jest.mock("@/components/navbar", () => () => <div data-testid="navbar">Mock Navbar</div>);
 jest.mock("@/components/addcourse", () => () => <div data-testid="add-course">Mock AddCourse</div>);
