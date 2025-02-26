@@ -33,12 +33,23 @@ export async function POST(req: Request)
             { message: 'Tutorial added successfully', tutorialId: tutorial._id },
             { status: 200 }
         );
-    } catch (error: any)
+    } catch (error: unknown)
     {
-        console.error('Error adding tutorial:', error.message || error);
+        console.error('Error adding tutorial:', error);
+
+        // Ensure error is an instance of Error before accessing its message
+        if (error instanceof Error)
+        {
+            return NextResponse.json(
+                { error: error.message },
+                { status: 500 }
+            );
+        }
+
         return NextResponse.json(
-            { error: error.message || 'Failed to add tutorial' },
+            { error: 'Failed to add tutorial' },
             { status: 500 }
         );
     }
+
 }
