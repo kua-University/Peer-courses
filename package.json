@@ -14,6 +14,7 @@
     "@clerk/nextjs": "^6.10.4",
     "@stripe/stripe-js": "^5.4.0",
     "cloudinary": "^2.5.1",
+    "lucide-react": "^0.476.0",
     "mongoose": "^8.9.2",
     "msw": "^2.7.0",
     "next": "15.1.2",

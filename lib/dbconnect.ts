@@ -1,3 +1,4 @@
+//lib/dbconnect.ts
 import mongoose, { Connection } from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -20,7 +21,7 @@ export default async function dbConnect(): Promise<Connection | undefined>
             throw new Error("Please define the MONGODB_URI environment variable");
         }
 
-        const db = await mongoose.connect(MONGODB_URI, { serverSelectionTimeoutMS: 5000 });
+        const db = await mongoose.connect(MONGODB_URI, { serverSelectionTimeoutMS: 50000 });
 
         isConnected = db.connections[0].readyState;
         console.log("Connected to MongoDB");

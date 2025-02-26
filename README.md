@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# **Next.js TypeScript Project**
 
-## Getting Started
+A full-stack **Next.js** application with **TypeScript** , **Clerk authentication** , **MongoDB** , **Stripe payments** , and **Cloudinary** for media uploads.
 
-First, run the development server:
+## **🚀 Setup Instructions**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### **1️⃣ Install Dependencies**
+
+```sh
+npm install  # or yarn install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### **2️⃣ Configure Environment Variables**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Create a **`.env.local`** file in your project root and add:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your-clerk-publishable-key
+CLERK_SECRET_KEY=your-clerk-secret-key
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your-stripe-public-key
+STRIPE_SECRET_KEY=your-stripe-secret-key
+MONGODB_URI=your-mongodb-uri
+CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-api-key
+CLOUDINARY_API_SECRET=your-api-secret
+NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=your-upload-preset
+```
 
-## Learn More
+L[c]()ogin to clerk,stripe, claudinary and get your credetials please
 
-To learn more about Next.js, take a look at the following resources:
+### **3️⃣ Run the Development Server**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```sh
+npm run dev  # or yarn dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## **🛠️ Tech Stack**
 
-## Deploy on Vercel
+- **Next.js 15** (Full-stack framework)
+- **TypeScript** (Static typing)
+- **Clerk** (Authentication)
+- **MongoDB + Mongoose** (Database)
+- **Stripe** (Payments)
+- **Cloudinary** (File uploads)
+- **Tailwind CSS** (Styling)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## **🧪 Testing**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Jest** → Unit tests (`npm test`)
+- **Cypress** → End-to-end tests (`npx cypress open`)
+
+## **🚀 Deployment**
+
+Host on **Vercel** :
+
+1. Push code to **GitHub** .
+2. Import repo in **Vercel** .
+3. Set **environment variables** .
+4. Click **Deploy** .
+
+   Need help
+   Open an issue on github Or contact me L[inkedIn](https://www.linkedin.com/in/tilahun-goitom-559401302/ "tilahun@LinkedIn")
+
+---
+
+🎉 **Happy Coding!** 🚀
